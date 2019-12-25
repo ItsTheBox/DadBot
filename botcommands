@@ -1,0 +1,17 @@
+Here are the commands for DadBot
+
+All Administration commands require specific roles that are defined within code.
+
+%kick - kicks user
+%ban - bans user 
+
+You are able to provide reasons after command, such as "%ban @user#0000 swinging the banhammer". 
+Reasons will be logged within the server audit log.
+
+%purge *number of messages to purge between 2 and 100*
+
+%ping
+
+%info
+
+%help
