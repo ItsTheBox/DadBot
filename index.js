@@ -1,6 +1,6 @@
 const Discord = require('discord.js'); //Things to make Discord integration work.
 const client = new Discord.Client(); 
-const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgBPTA.PkvPw7i0PpARYHmjzJ53d-u3rWo'; //Token to allow project to log into bot
+const token = ; //Token to allow project to log into bot
 const PREFIX = '%'; //Command prefix.
 var version = "0.0.8"
 
