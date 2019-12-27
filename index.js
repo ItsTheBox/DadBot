@@ -1,8 +1,8 @@
 const Discord = require('discord.js'); //Require discord.js so bot can function and integrate with Discord services.
 const client = new Discord.Client(); 
-const token = '; //Token to allow project to log into bot
+const token = ''; //Token to allow project to log into bot
 const config = require("./config.json");
-var version = "0.1.8"
+var version = "0.2.0"
 
 
 
@@ -65,10 +65,10 @@ client.on("guildCreate", guild => {
     }
     // Single line commands.
     
-    //Uptime
+    //Hosting information
 
-    if(command == "uptime"){
-        return message.channel.send("Sometimes, I go offline. This is beacuse I am not hosted on a 24/7 uptime server. Soon, I'll be moved to a cloud server so I can perform my fatherly duties around the clock! Thank you for your patience. <3")
+    if(command == "hosting"){
+        return message.channel.send("I am hosted on Red Hat Enterprise Linux 8.0.0 within an AWS EC2 instance. This allows me to be online 24/7, so long as Amazon isn't having issues! If you'd like to know more, message my creator, Frank.")
     }
 
     //Info
@@ -80,14 +80,14 @@ client.on("guildCreate", guild => {
     //Help
 
     if (command == "help"){
-        return message.reply("You can use %command to invoke commands. Administration commands include %kick, %ban, and %purge. You muse have the proper permissions to use these commands!")
+        return message.reply("You can use %command to invoke commands. Administration commands include %kick, %ban, and %purge. In order to use these commands, you must have the proper server roles! If you are experiencing issues with any commands, please let my creator know!")
     }
 
 
-    //Easter Eggs
+    //Easter Eggs and other commands.
 
     if (command == "dad"){
-      return message.channel.send("Hi! I am DadBot, if you'd like to know more about me, you can try using the commands %birthday or %aboutdad");
+      return message.channel.send("Hi! I am DadBot, if you'd like to know more about me, you can try using the commands %birthday or %aboutdad. Right now I am a simple bot, and I have lots of room to grow!");
 
     }
 
@@ -98,7 +98,7 @@ client.on("guildCreate", guild => {
 
     if (command == "aboutdad"){
 
-      message.channel.send("Hello! I am DadBot, AKA Dad. I am a Discord bot written in JavaScript. It's a neat language that allows me to do many things. I love meeting new people and helping others!");
+      message.channel.send("Hello! I am DadBot, AKA Dad. I am a Discord bot written in JavaScript. It's a neat language that allows me to do many things. I love meeting new people and helping others! If you'd like to know about MY dad, you can visit itsthebox.net!");
     }
 
     if (command == "birthday"){
@@ -111,12 +111,12 @@ client.on("guildCreate", guild => {
       message.channel.send("Huh? Oh! I love breakfast bagels. Mmmmm, cheese, bagel, egg, bacon! Here's a good recipe I like to make from time to time: https://www.dontgobaconmyheart.co.uk/egg-in-a-hole-breakfast-bagel/ ");
     }
 
-    if (command == "eggnog"){
+    if (command == "secret"){
 
-      message.channel.send("Ah yes, a great beverage for all times of year! https://cdn.liquor.com/wp-content/uploads/2016/12/01075123/11-Go-To-Cocktails-for-December-Parties-uncle-angelos-eggnog-720x720-slideshow.jpg");
+      message.channel.send("Secret unlocked... here's your secret message :) : https://bit.ly/37keT7z");
     }
 
-    if (command == "diggydiggyhole"){
+    if (command == "diggydiggyhole"){ 
 
       message.channel.send("I am a dwarf and I'm digging a hole, diggy diggy hole: https://www.youtube.com/watch?v=ytWz0qVvBZ0")
     }
@@ -125,14 +125,40 @@ client.on("guildCreate", guild => {
 
       message.channel.send("I'm sorry, but that definitely isn't it, chief.")
     }
+
+    if (command == "egg"){
+
+      const replies = ["Egg salad sandwich. https://www.bordendairy.com/wp-content/uploads/2017/09/Egg_salad_sandwich.png", "Eggs Benedict. https://dinnerthendessert.com/wp-content/uploads/2018/08/Eggs-Benedict-3.jpg", "Fried Egg. https://cookieandkate.com/images/2018/09/crispy-fried-egg-recipe.jpg", "Poached Egg. https://thestayathomechef.com/wp-content/uploads/2014/11/How-To-Poach-Eggs-3.jpg", "Bacon and eggs. https://www.chinovalleyranchers.com/wp-content/uploads/bfi_thumb/Bacon-and-Eggs-33e2tqb6oznh3h0njcix34.jpg"]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
+            
+    }
    //Ping
     
-    if(command === "ping") {
+    if(command == "ping") {
 
       const m = await message.channel.send("I am now performing the requested network test, please stand by.");
       m.edit(`Complete! Here are your results: Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
     }
+
+    //Uptime
+
+    if (command == "uptime"){
+
+      let totalSeconds = (client.uptime / 1000);
+      let days = Math.floor(totalSeconds / 86400);
+      let hours = Math.floor(totalSeconds / 3600);
+      let minutes = Math.floor (totalSeconds / 60);
+      let seconds = totalSeconds % 60;
+
+      let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+
+      message.channel.send("I have been online for " + uptime + ". All systems nominal!");
+    }
     
+    //Used for administrative messages, mostly. Lets me type as the bot.
     if(command === "say") {
    
       const sayMessage = args.join(" ");
@@ -145,7 +171,7 @@ client.on("guildCreate", guild => {
     if(command === "kick") {
       
       if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Moderators", "Frank"].includes(r.name)) )
-        return message.reply("you don't have permission to kick people!");
+        return message.reply("you don't have permission to kick people! I bet you don't even know the shape of Italy!");
       
     
       let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -170,7 +196,7 @@ client.on("guildCreate", guild => {
     if(command === "ban") {
      
       if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Frank"].includes(r.name)) )
-        return message.reply("you don't have permission to ban people!");
+        return message.reply("you don't have permission to ban people, good try though!");
       
       let member = message.mentions.members.first();
       if(!member)
@@ -190,8 +216,8 @@ client.on("guildCreate", guild => {
 
     if(command === "purge") {
     
-    if(!message.member.roles.some(r=>["Owner","Co-Owner", "Administrators", "Frank"].includes(r.name)) )
-    return message.reply("you don't have permission to purge messages!");
+    if(!message.member.roles.some(r=>["Owner","Co-Owner", "Frank"].includes(r.name)) )
+    return message.reply("you don't have permission to purge messages! You silly goose, you.");
       
       const deleteCount = parseInt(args[0], 10);
       
@@ -204,3 +230,5 @@ client.on("guildCreate", guild => {
         .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
     }
   });
+
+
