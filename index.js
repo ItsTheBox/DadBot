@@ -1,8 +1,8 @@
 const Discord = require('discord.js'); //Require discord.js so bot can function and integrate with Discord services.
 const client = new Discord.Client(); 
-const token = ''; //Token to allow project to log into bot
+const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgKTmQ.P5Mqd_zSL_EU4ckUBF0clfqDUc0'; //Token to allow project to log into bot
 const config = require("./config.json");
-var version = "0.2.0"
+var version = "0.2.1"
 
 
 
@@ -135,6 +135,12 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[message.replytext]);
             
     }
+
+    if (command == "helpme"){
+
+      const replies = ["Everything will be okay!", "I am here for you.", "Take a deep breath, maybe drink some water! If only I could drink water, alas, I am a bot.", "You can talk to me, I don't judge!", ""]
+    }
+
    //Ping
     
     if(command == "ping") {
@@ -153,7 +159,7 @@ client.on("guildCreate", guild => {
       let minutes = Math.floor (totalSeconds / 60);
       let seconds = totalSeconds % 60;
 
-      let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+      let uptime = `${days} days, or ${hours} hours, or ${minutes} minutes and ${seconds} seconds`;
 
       message.channel.send("I have been online for " + uptime + ". All systems nominal!");
     }
