@@ -1,6 +1,6 @@
 const Discord = require('discord.js'); //Require discord.js so bot can function and integrate with Discord services.
 const client = new Discord.Client(); 
-const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgKTmQ.P5Mqd_zSL_EU4ckUBF0clfqDUc0'; //Token to allow project to log into bot
+const token = ''; //Token to allow project to log into bot
 const config = require("./config.json");
 var version = "0.2.1"
 
