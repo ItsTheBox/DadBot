@@ -2,7 +2,7 @@ const Discord = require('discord.js'); //Require discord.js so bot can function 
 const client = new Discord.Client(); 
 const token = ''; //Token to allow project to log into bot
 const config = require("./config.json");
-var version = "0.2.1"
+var version = "0.2.2"
 
 
 
@@ -139,6 +139,10 @@ client.on("guildCreate", guild => {
     if (command == "helpme"){
 
       const replies = ["Everything will be okay!", "I am here for you.", "Take a deep breath, maybe drink some water! If only I could drink water, alas, I am a bot.", "You can talk to me, I don't judge!", ""]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
     }
 
    //Ping
@@ -236,5 +240,3 @@ client.on("guildCreate", guild => {
         .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
     }
   });
-
-
