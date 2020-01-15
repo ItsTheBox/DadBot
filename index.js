@@ -1,10 +1,9 @@
 const Discord = require('discord.js'); //Require discord.js so bot can function and integrate with Discord services.
-const client = new Discord.Client(); 
+var client = new Discord.Client(); 
 const token = ''; //Token to allow project to log into bot
 const config = require("./config.json");
-var version = "0.2.2"
-
-
+const prefix = '%';
+var version = "0.2.3";
 
 
 client.login(token); //Login to Discord services.
@@ -48,9 +47,9 @@ client.on("guildCreate", guild => {
   
     if(message.content.indexOf(config.prefix) !== 0) return;
     
-
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    const command = args.shift().toLowerCase()
+
 
     // Simple hello reply
 
@@ -98,7 +97,7 @@ client.on("guildCreate", guild => {
 
     if (command == "aboutdad"){
 
-      message.channel.send("Hello! I am DadBot, AKA Dad. I am a Discord bot written in JavaScript. It's a neat language that allows me to do many things. I love meeting new people and helping others! If you'd like to know about MY dad, you can visit itsthebox.net!");
+      message.channel.send("Hello! I am DadBot, AKA Dad. I am a Discord bot written in JavaScript. It's a neat language that allows me to do many things. I love meeting new people and helping others! I also love my wife, MomBot! If you'd like to know about MY dad, you can visit itsthebox.net!");
     }
 
     if (command == "birthday"){
@@ -106,9 +105,17 @@ client.on("guildCreate", guild => {
       message.channel.send("I was born on December 25th, 2019, according to my creator. I enjoy celebrating my birthday with my users and blowing out 64-bit candles.");
     }
     
-    if (command == "breakfastbagel"){
+    if (command == "loaf"){
 
-      message.channel.send("Huh? Oh! I love breakfast bagels. Mmmmm, cheese, bagel, egg, bacon! Here's a good recipe I like to make from time to time: https://www.dontgobaconmyheart.co.uk/egg-in-a-hole-breakfast-bagel/ ");
+      message.channel.send("You have requested a loaf, here is your requested loaf: ");
+
+
+      const replies = ["https://bit.ly/2TnDILR", "https://bit.ly/2TmH3e6", "https://bit.ly/2QUJT8Q", "https://bit.ly/2Nvf0pk", "https://bit.ly/2NHBVhl", "https://bit.ly/35RNsAQ"]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
+
     }
 
     if (command == "secret"){
@@ -169,7 +176,7 @@ client.on("guildCreate", guild => {
     }
     
     //Used for administrative messages, mostly. Lets me type as the bot.
-    if(command === "say") {
+    if(command == "say") {
    
       const sayMessage = args.join(" ");
 
@@ -178,7 +185,7 @@ client.on("guildCreate", guild => {
       message.channel.send(sayMessage);
     }
     
-    if(command === "kick") {
+    if(command == "kick") {
       
       if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Moderators", "Frank"].includes(r.name)) )
         return message.reply("you don't have permission to kick people! I bet you don't even know the shape of Italy!");
@@ -203,7 +210,7 @@ client.on("guildCreate", guild => {
     
 
     // Can use ["Administrator", "Moderator"] for multiple roles
-    if(command === "ban") {
+    if(command == "ban") {
      
       if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Frank"].includes(r.name)) )
         return message.reply("you don't have permission to ban people, good try though!");
@@ -224,19 +231,19 @@ client.on("guildCreate", guild => {
     
     //Purging Messages
 
-    if(command === "purge") {
+    if(command == "purge") {
     
-    if(!message.member.roles.some(r=>["Owner","Co-Owner", "Frank"].includes(r.name)) )
-    return message.reply("you don't have permission to purge messages! You silly goose, you.");
-      
-      const deleteCount = parseInt(args[0], 10);
-      
-      
-      if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-        return message.reply("please provide a number between 2 and 100 for the number of messages to delete. Deleting 50+ messages may take a few seconds. Be patient!");
-      
-      const fetched = await message.channel.fetchMessages({limit: deleteCount});
-      message.channel.bulkDelete(fetched)
-        .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+      if(!message.member.roles.some(r=>["Owner","Co-Owner", "Frank"].includes(r.name)) )
+      return message.reply("you don't have permission to purge messages! You silly goose, you.");
+        
+        const deleteCount = parseInt(args[0], 10);
+        
+        
+        if(!deleteCount || deleteCount < 2 || deleteCount > 100)
+          return message.reply("please provide a number between 2 and 100 for the number of messages to delete. Deleting 50+ messages may take a few seconds. Be patient!");
+        
+        const fetched = await message.channel.fetchMessages({limit: deleteCount});
+        message.channel.bulkDelete(fetched)
+          .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
     }
-  });
+});
