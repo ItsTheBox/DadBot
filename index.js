@@ -1,9 +1,11 @@
 const Discord = require('discord.js'); //Require discord.js so bot can function and integrate with Discord services.
 var client = new Discord.Client(); 
+var cheerio = require ('cheerio'); //Extracts HTML content based on JQuery.
+var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
-const config = require("./config.json");
+const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.3";
+var version = "0.2.4";
 
 
 client.login(token); //Login to Discord services.
@@ -152,6 +154,42 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[message.replytext]);
     }
 
+    if (command == "shrimp"){
+      
+      message.channel.send("Shrimp inbound!")
+
+
+      const replies = ["https://bit.ly/2swJSyp", "https://bit.ly/2tpcPwz", "https://bit.ly/2u2mw41", "https://bit.ly/35WI937", "https://bit.ly/3ae8htr", "https://bit.ly/2NuTq48", "https://bit.ly/2R1qGlI"]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
+
+    }
+
+    if (command == "carbonara"){
+
+
+      const replies = ["https://bit.ly/2R1ryqH", "https://bit.ly/360TiQv", "https://bit.ly/2u9TShC", "https://bit.ly/3ah93Ge", "https://bit.ly/2Nzv49t", "https://bit.ly/38ijU0z"]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
+
+    }
+
+    if (command == "hungry"){
+
+      message.reply("here is where you are getting food: ")
+
+      const replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger (Texas only, reroll if not in Texas!", "Eat at home.", "Check grocery store."]
+
+      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+      message.channel.send(replies[message.replytext]);
+
+    }
+
    //Ping
     
     if(command == "ping") {
@@ -246,4 +284,58 @@ client.on("guildCreate", guild => {
         message.channel.bulkDelete(fetched)
           .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
     }
+
+//Image Search
+var parts = message.content.split(" ");
+
+if (parts[0] === "%image") { // Check if first part of message is image command
+
+  image(message, parts); // Pass requester message to image function
+  function image(message, parts) {
+ 
+    /* extract search query from message */
+  
+    var search = parts.slice(1).join(" "); // Slices of the command part of the array ["!image", "cute", "dog"] ---> ["cute", "dog"] ---> "cute dog"
+  
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + search,
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+    request(options, function(error, response, responseBody) {
+        if (error) {
+            // handle error
+            return;
+        }
+  
+        /* Extract image URLs from responseBody using cheerio */
+  
+        $ = cheerio.load(responseBody); // load responseBody into cheerio (jQuery)
+  
+        // In this search engine they use ".image a.link" as their css selector for image links
+        var links = $(".image a.link");
+  
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+        console.log(urls);
+        if (!urls.length) {
+            // Handle no results
+            message.channel.send("No results found!");
+            return;
+        }
+  
+        // Send result
+        message.channel.send("I pull these images from Google, I am not responsible for images that cannot load or are not related to the search subject!");
+        
+        message.channel.send( urls[0] );
+
+        message.channel.send("Please take a few seconds break between searches, if you search too fast I can get blocked from searching images! D:")
+
+      });
+ 
+    }
+}
+
 });
