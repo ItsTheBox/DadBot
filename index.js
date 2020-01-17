@@ -5,7 +5,7 @@ var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.4";
+var version = "0.2.5";
 
 
 client.login(token); //Login to Discord services.
@@ -81,20 +81,30 @@ client.on("guildCreate", guild => {
     //Help
 
     if (command == "help"){
-        return message.reply("You can use %command to invoke commands. Administration commands include %kick, %ban, and %purge. In order to use these commands, you must have the proper server roles! If you are experiencing issues with any commands, please let my creator know!")
+
+      const replies = ["%info, %dad, %favorites, %hosting, %image, %8ball, %kick, %ban, %egg, %loaf, %shrimp, %carbonara, %birthday, %dadbot, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh."]
+
+        let creator = ("@Frank#0200")
+        let resp = new Discord.RichEmbed()
+        .setColor("GREEN")
+        .setTitle("Here are the commands you can use!")
+        .addField("Commands", replies)
+        .setFooter("If you would like to request a feature, please ask my creator!")
+
+        message.channel.send(resp);
     }
 
 
     //Easter Eggs and other commands.
 
     if (command == "dad"){
-      return message.channel.send("Hi! I am DadBot, if you'd like to know more about me, you can try using the commands %birthday or %aboutdad. Right now I am a simple bot, and I have lots of room to grow!");
+      return message.channel.send("Hi! I am DadBot, if you'd like to know more about me, you can try using the commands %birthday or %aboutdad. I have grown quite a bit since my creation, and am happy to serve!");
 
     }
 
     if (command == "favorites"){
 
-      message.channel.send("Here are a few of my favorite things: Astronomy, 8 Bit Tunes, Soup, Breakfast Bagels, Puns, and being Dad :)")
+      message.channel.send("Here are a few of my favorite things: Astronomy, 8 Bit Tunes, Soup, Breakfast Bagels, Puns, Coffee, and being Dad :)")
     }
 
     if (command == "aboutdad"){
@@ -154,9 +164,15 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[message.replytext]);
     }
 
+    if (command == "laugh"){
+
+      message.channel.send("HAHASHAHAHAHASAHASHAHA1 H1HH!!HAHAHAHAHAAHAHAHAHAHHAAHHAHASHAHAHAHAHAQHAHAHAHAHAHAHAA");
+
+    }
+
     if (command == "shrimp"){
       
-      message.channel.send("Shrimp inbound!")
+      message.reply("shrimp inbound!")
 
 
       const replies = ["https://bit.ly/2swJSyp", "https://bit.ly/2tpcPwz", "https://bit.ly/2u2mw41", "https://bit.ly/35WI937", "https://bit.ly/3ae8htr", "https://bit.ly/2NuTq48", "https://bit.ly/2R1qGlI"]
@@ -170,6 +186,8 @@ client.on("guildCreate", guild => {
     if (command == "carbonara"){
 
 
+      message.reply("here is your carbonara, bon appetit!")
+
       const replies = ["https://bit.ly/2R1ryqH", "https://bit.ly/360TiQv", "https://bit.ly/2u9TShC", "https://bit.ly/3ah93Ge", "https://bit.ly/2Nzv49t", "https://bit.ly/38ijU0z"]
 
       message.replytext = Math.floor((Math.random()*replies.length)+ 0);
@@ -180,13 +198,42 @@ client.on("guildCreate", guild => {
 
     if (command == "hungry"){
 
-      message.reply("here is where you are getting food: ")
 
-      const replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger (Texas only, reroll if not in Texas!", "Eat at home.", "Check grocery store."]
+      // Establishments in no particular order.
 
-      message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+      let replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store"]
+      let result = Math.floor((Math.random()*replies.length));
 
-      message.channel.send(replies[message.replytext]);
+      let foodresponse = new Discord.RichEmbed()
+      .setTitle("You have issued the 'hungry' command! A random food establishment will be generated for you below!")
+      .addField("**Food Establishment:** ", replies[result])
+      .setDescription("Generating food...")
+      .setColor("BLUE")
+      .setFooter("If you do not have the generated establishment where you live, issue the %hungry command again!")
+
+      message.channel.send(foodresponse);
+
+
+    }
+
+    //8ball
+
+    if (command == "8ball"){
+
+      if (!args[2]) return message.reply("that is not a question.");
+      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Shut the fuck up.", "I guess?", "If you really want...", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else."];
+
+      let result = Math.floor((Math.random() * replies.length));
+      
+      let question = args.slice(0).join(" ");
+
+      let ballsresponse = new Discord.RichEmbed()
+      .setAuthor("User who asked the question: " + message.author.tag)
+      .setColor("RANDOM")
+      .addField("Question", question)
+      .addField("Answer", replies[result])
+
+      message.channel.send(ballsresponse);
 
     }
 
@@ -337,5 +384,7 @@ if (parts[0] === "%image") { // Check if first part of message is image command
  
     }
 }
+
+//Start next addition here.
 
 });
