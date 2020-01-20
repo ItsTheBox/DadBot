@@ -5,7 +5,7 @@ var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.5";
+var version = "0.2.6";
 
 
 client.login(token); //Login to Discord services.
@@ -82,7 +82,7 @@ client.on("guildCreate", guild => {
 
     if (command == "help"){
 
-      const replies = ["%info, %dad, %favorites, %hosting, %image, %8ball, %kick, %ban, %egg, %loaf, %shrimp, %carbonara, %birthday, %dadbot, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh."]
+      const replies = ["%info, %dad, %favorites, %hosting, %image, %kick, %ban, %egg, %loaf, %shrimp, %carbonara, %birthday, %dadbot, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh, %question."]
 
         let creator = ("@Frank#0200")
         let resp = new Discord.RichEmbed()
@@ -196,6 +196,21 @@ client.on("guildCreate", guild => {
 
     }
 
+
+    if (command == "mombot"){
+
+      let resp = new Discord.RichEmbed()
+      .setTitle("My Wife!")
+      .setDescription("Mombot is my wife, I love her (no matter what else I may say). She is a music bot that can play songs, build a song queue, and help you jam out! She is the best.")
+      .setFooter("If you experience any issues with MomBot, please email frank@itsthebox.net, or join the official Mom & Dad bot Discord! https://discord.gg/RxVXJJ7")
+      .setColor('GREEN')
+
+      message.channel.send(resp);
+
+
+
+    }
+
     if (command == "hungry"){
 
 
@@ -218,10 +233,10 @@ client.on("guildCreate", guild => {
 
     //8ball
 
-    if (command == "8ball"){
+    if (command == "question"){
 
       if (!args[2]) return message.reply("that is not a question.");
-      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Shut the fuck up.", "I guess?", "If you really want...", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else."];
+      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Thanks for asking, but no :(.", "Not looking good...", "100% Yes", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else.", "I'm not angry that you asked that, I'm just dissapointed...", "What does your heart say?", "Without a doubt.", "Yup!", "Nope!", "Unsure. Try again.", "Bro, 100%", "Nah", "Bruh, try again.", "That ain't it chief.", "Ask your mother.", "Yes. YES, YESSSS!", "No. No. No. No.", "I appreciate that question, yes!", "Uh huh!", "Nuh uh."];
 
       let result = Math.floor((Math.random() * replies.length));
       
@@ -232,6 +247,7 @@ client.on("guildCreate", guild => {
       .setColor("RANDOM")
       .addField("Question", question)
       .addField("Answer", replies[result])
+      .setDescription("These answers are randomly generated, Dadbot is not sexist, racist, and he loves his wife.")
 
       message.channel.send(ballsresponse);
 
