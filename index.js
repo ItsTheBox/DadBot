@@ -5,7 +5,7 @@ var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.6";
+var version = "0.2.7";
 
 
 client.login(token); //Login to Discord services.
@@ -64,57 +64,111 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[message.replytext]);
 
     }
-    // Single line commands.
+   // Single line commands.
     
     //Hosting information
 
     if(command == "hosting"){
-        return message.channel.send("I am hosted on Red Hat Enterprise Linux 8.0.0 within an AWS EC2 instance. This allows me to be online 24/7, so long as Amazon isn't having issues! If you'd like to know more, message my creator, Frank.")
+        
+        let resp = new Discord.RichEmbed()
+        .setColor("RED")
+        .setTitle("Hosting Information.")
+        .addField("Current hosting information:", "DadBot is hosted on Red Hat Enterprise Linux 8.0.0, running within an Amazon Web Services EC2 cloud virutal machine instance!")
+        .setFooter("For more information or for any inquiries, please email frank@itsthebox.net")
+        .setThumbnail('https://bit.ly/2RCmoAf')
+        
+        message.channel.send(resp);
     }
 
     //Info
 
     if(command == "info"){
-        return message.channel.send("Hi! I'm DadBot. Currently, I am running on DadBot version " + (version) + ". If you would like to contact my creator, please email frank@itsthebox.net :envelope:" )
+    
+  
+      let resp = new Discord.RichEmbed()
+      .setTitle("Information!")
+      .setDescription("DadBot current information.")
+      .addField("Current Version:", version)
+      .addField("Statistics:", `DadBot is online, serving ${client.users.size} users, in ${client.channels.size} channels in ${client.guilds.size} servers.`)
+      .setColor("GREEN")
+      .setThumbnail("https://bit.ly/30FLnXC")
+
+      message.channel.send(resp);
     }
 
     //Help
 
     if (command == "help"){
 
-      const replies = ["%info, %dad, %favorites, %hosting, %image, %kick, %ban, %egg, %loaf, %shrimp, %carbonara, %birthday, %dadbot, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh, %question."]
+      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh, %question, %mombot."]
 
-        let creator = ("@Frank#0200")
         let resp = new Discord.RichEmbed()
         .setColor("GREEN")
         .setTitle("Here are the commands you can use!")
         .addField("Commands", replies)
-        .setFooter("If you would like to request a feature, please ask my creator!")
+        .setFooter("If you would like to request a feature, please send an email to frank@itsthebox.net or join the official Mom & Dad bot Discord server and open a ticket! https://discord.gg/RxVXJJ7")
+        .setThumbnail('https://bit.ly/2TGVKJj')
 
         message.channel.send(resp);
     }
 
+  //imagehelp command for %image searching, just to let people know best practices.
+
+  if (command == "imagehelp"){
+
+    const text = ("The %image command allows you to search for images with DadBot. You can do this by using %image ____. Please note that due to the nature of this command and how DadBot gets his images, he is very prone to being IP blocked from image searching. Please, only search one image at a time and only have one person search at a time. Overlapping searches, too many searches at once, and other factors can lead to an IP block. Thanks!");
+
+    let resp = new Discord.RichEmbed()
+    .setColor("RED")
+    .setTitle("Using the %image command.")
+    .setDescription(text)
+    .setFooter("I am actively working on mitigating the IP bans that DadBot has been experiencing when searching for images. Thank you for your patience!")
+    .setThumbnail('https://bit.ly/38ujtjQ')
+
+    message.channel.send(resp);
+
+  }
 
     //Easter Eggs and other commands.
 
-    if (command == "dad"){
-      return message.channel.send("Hi! I am DadBot, if you'd like to know more about me, you can try using the commands %birthday or %aboutdad. I have grown quite a bit since my creation, and am happy to serve!");
-
-    }
-
     if (command == "favorites"){
 
-      message.channel.send("Here are a few of my favorite things: Astronomy, 8 Bit Tunes, Soup, Breakfast Bagels, Puns, Coffee, and being Dad :)")
+     let favs = new Discord.RichEmbed()
+     .setColor("BLUE")
+     .setTitle("Here are a few of my favorite things!")
+     .addField("Food:", "Coffee, Breakfast Bagels, Carbonara, Shrimp, Ramen, and Electricity.")
+     .addField("Hobbies/Music:", "Astronomy, 8-Bit Tunes, being Dad.")
+     .addField("Others:", "Dogs, Coffee Makers, Living in the Cloud.")
+     .setThumbnail("https://bit.ly/37ehlMZ")
+
+     message.channel.send(favs);
     }
 
     if (command == "aboutdad"){
 
-      message.channel.send("Hello! I am DadBot, AKA Dad. I am a Discord bot written in JavaScript. It's a neat language that allows me to do many things. I love meeting new people and helping others! I also love my wife, MomBot! If you'd like to know about MY dad, you can visit itsthebox.net!");
+      let resp = new Discord.RichEmbed()
+      .setColor("GREEN")
+      .setTitle("About DadBot.")
+      .addField("What language DadBot witten in?", "Javascript.")
+      .addField("Who made DadBot?", "@Frank#0200")
+      .addField("Can you teach me how to make a Discord Bot?", "Sure!")
+      .addField("How can I learn more about DadBot?", "Use %info, %favorites, or %birthday.")
+      .setThumbnail("https://bit.ly/30EZBb8")
+
+      message.channel.send(resp);
+
     }
 
     if (command == "birthday"){
 
-      message.channel.send("I was born on December 25th, 2019, according to my creator. I enjoy celebrating my birthday with my users and blowing out 64-bit candles.");
+      let birth = new Discord.RichEmbed()
+      .setColor("#FF1493")
+      .setTitle("Happy Birthday to Me!")
+      .addField("My birthday is:", "December 25th, 2019")
+      .addField("When I blow out the 64-bit candles, I wish for:", "Everyone to be happy and to enjoy their lives.")
+      .setThumbnail('https://bit.ly/30OxsyE')
+
+      message.channel.send(birth);
     }
     
     if (command == "loaf"){
@@ -142,7 +196,18 @@ client.on("guildCreate", guild => {
 
     if (command == "badtake"){
 
-      message.channel.send("I'm sorry, but that definitely isn't it, chief.")
+      let additionalresponses = ["I don't understand how you can think that was a good take.", "Please re-evaluate that take.", "Jesus Christ, were you born on a minefield?", "Not sure about that one, chief.", "Please try again, because that was a terrible take.", "Stop typing."]
+      let result = Math.floor((Math.random() * additionalresponses.length));
+      
+
+      let resp = new Discord.RichEmbed()
+      .setColor("RED")
+      .setTitle("That was a really bad take, chief.")
+      .addField("Consider the following:", additionalresponses[result])
+      .setThumbnail('https://bit.ly/38pMxsX')
+
+      message.channel.send(resp);
+      
     }
 
     if (command == "egg"){
@@ -166,7 +231,7 @@ client.on("guildCreate", guild => {
 
     if (command == "laugh"){
 
-      message.channel.send("HAHASHAHAHAHASAHASHAHA1 H1HH!!HAHAHAHAHAAHAHAHAHAHHAAHHAHASHAHAHAHAHAQHAHAHAHAHAHAHAA");
+      message.channel.send("HAHASHAHAHAHASAHASHAHA1 H1HH!!HAHAHAHAHAAHAHAHAHAHHAAHHAHASHAHAHAHAHAQHAHAHAHAHAHAHAA THAT WAS REALLY FUNNY OH GOD HAHAHAHDAHSHDASHDAHSHDASHDASHASDHADSHHDSAH");
 
     }
 
@@ -207,8 +272,6 @@ client.on("guildCreate", guild => {
 
       message.channel.send(resp);
 
-
-
     }
 
     if (command == "hungry"){
@@ -216,7 +279,7 @@ client.on("guildCreate", guild => {
 
       // Establishments in no particular order.
 
-      let replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store"]
+      let replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store", "Quiznos", "Carls Jr/Hardees", "Long John Silvers", "Culver's", "Freddy's", "In-N-Out", "Firehouse Subs", "Panera Bread", "Church's Chicken", "Jersey Mike's", "Five Guys", "Starve."]
       let result = Math.floor((Math.random()*replies.length));
 
       let foodresponse = new Discord.RichEmbed()
@@ -225,18 +288,39 @@ client.on("guildCreate", guild => {
       .setDescription("Generating food...")
       .setColor("BLUE")
       .setFooter("If you do not have the generated establishment where you live, issue the %hungry command again!")
+      .setThumbnail('https://bit.ly/2uixUsE')
 
       message.channel.send(foodresponse);
 
 
     }
 
-    //8ball
+    if (command == "azekommand"){
+
+
+      let replies = ["https://bit.ly/2RfqijE", "https://bit.ly/37h6Lox", "https://bit.ly/36hNOAO"]
+      let result = Math.floor((Math.random()*replies.length));
+
+      let resp = new Discord.RichEmbed()
+      .setTitle("Enjoy your requested Azekahh content!")
+      .setColor("#FFFF00")
+
+      message.channel.send(resp);
+ 
+      message.channel.send(replies[result]);
+    }
+
+
+
+
+
+    //question
 
     if (command == "question"){
 
       if (!args[2]) return message.reply("that is not a question.");
-      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Thanks for asking, but no :(.", "Not looking good...", "100% Yes", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else.", "I'm not angry that you asked that, I'm just dissapointed...", "What does your heart say?", "Without a doubt.", "Yup!", "Nope!", "Unsure. Try again.", "Bro, 100%", "Nah", "Bruh, try again.", "That ain't it chief.", "Ask your mother.", "Yes. YES, YESSSS!", "No. No. No. No.", "I appreciate that question, yes!", "Uh huh!", "Nuh uh."];
+      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Thanks for asking, but no :(.", "Not looking good...", "100% Yes", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else.", "I'm not angry that you asked that, I'm just dissapointed...", "What does your heart say?", "Without a doubt.", "Yup!", "Nope!", "Unsure. Try again.", "Bro, 100%", "Nah", "Bruh, try again.", "That ain't it chief.", "Ask your mother.", "Yes. YES, YESSSS!", "No. No. No. No.", "I appreciate that question, yes!", "Uh huh!", "Nuh uh.", "YUUUUUP!", "Not a chance.", "....yeah, no.", "Eh, probably.", "I can't predict everything, but probably not.", "I can't predict everything, but probably.", "Odds not looking good.", "Outlook good."];
+      //37 replies
 
       let result = Math.floor((Math.random() * replies.length));
       
@@ -247,7 +331,8 @@ client.on("guildCreate", guild => {
       .setColor("RANDOM")
       .addField("Question", question)
       .addField("Answer", replies[result])
-      .setDescription("These answers are randomly generated, Dadbot is not sexist, racist, and he loves his wife.")
+      .setFooter("These answers are randomly generated, DadBot is not sexist, racist, and he loves his wife.")
+      .setThumbnail('https://bit.ly/2Re95XX')
 
       message.channel.send(ballsresponse);
 
@@ -390,12 +475,11 @@ if (parts[0] === "%image") { // Check if first part of message is image command
         }
   
         // Send result
-        message.channel.send("I pull these images from Google, I am not responsible for images that cannot load or are not related to the search subject!");
+        message.channel.send("I pull these images from Google, I am not responsible for images that cannot load or are not related to the search subject! `Please see the %imagehelp command for searching best practices.`");
         
         message.channel.send( urls[0] );
 
-        message.channel.send("Please take a few seconds break between searches, if you search too fast I can get blocked from searching images! D:")
-
+  
       });
  
     }
