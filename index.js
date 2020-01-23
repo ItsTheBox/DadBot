@@ -2,10 +2,10 @@ const Discord = require('discord.js'); //Require discord.js so bot can function 
 var client = new Discord.Client(); 
 var cheerio = require ('cheerio'); //Extracts HTML content based on JQuery.
 var request = require ('request'); //Makes URL requests and fetches response.
-const token = ''; //Token to allow project to log into bot
+const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgKTmQ.P5Mqd_zSL_EU4ckUBF0clfqDUc0'; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.7";
+var version = "0.2.8";
 
 
 client.login(token); //Login to Discord services.
@@ -184,14 +184,17 @@ client.on("guildCreate", guild => {
 
     }
 
-    if (command == "secret"){
+    if (command == "gottem"){
 
-      message.channel.send("Secret unlocked... here's your secret message :) : https://bit.ly/37keT7z");
-    }
+      let resp = new Discord.RichEmbed()
+      .setTitle("HAH, GOTEEEEEM")
+      .setDescription("You have been gotten.")
+      .setColor("BLUE")
+      .addField("To be un-gotten:", "Get someone else.")
+      .setThumbnail("https://bit.ly/36m5ew6")
+      .setFooter("This command is extremely stupid, and will probably be removed in later updates.")
 
-    if (command == "diggydiggyhole"){ 
-
-      message.channel.send("I am a dwarf and I'm digging a hole, diggy diggy hole: https://www.youtube.com/watch?v=ytWz0qVvBZ0")
+      message.channel.send(resp);
     }
 
     if (command == "badtake"){
@@ -310,11 +313,6 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[result]);
     }
 
-
-
-
-
-    //question
 
     if (command == "question"){
 
@@ -441,7 +439,7 @@ if (parts[0] === "%image") { // Check if first part of message is image command
   image(message, parts); // Pass requester message to image function
   function image(message, parts) {
  
-    /* extract search query from message */
+    //Extract search query
   
     var search = parts.slice(1).join(" "); // Slices of the command part of the array ["!image", "cute", "dog"] ---> ["cute", "dog"] ---> "cute dog"
   
@@ -456,10 +454,11 @@ if (parts[0] === "%image") { // Check if first part of message is image command
     request(options, function(error, response, responseBody) {
         if (error) {
             // handle error
+            message.channel.send("There was an unknown error, please check logs!")
             return;
         }
   
-        /* Extract image URLs from responseBody using cheerio */
+        //Extract image URLs from responseBody using cheerio 
   
         $ = cheerio.load(responseBody); // load responseBody into cheerio (jQuery)
   
@@ -469,7 +468,9 @@ if (parts[0] === "%image") { // Check if first part of message is image command
         var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
         console.log(urls);
         if (!urls.length) {
-            // Handle no results
+
+            //No results
+
             message.channel.send("No results found!");
             return;
         }
@@ -483,6 +484,8 @@ if (parts[0] === "%image") { // Check if first part of message is image command
       });
  
     }
+
+    //Insert cooldown timer here.
 }
 
 //Start next addition here.
