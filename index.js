@@ -5,7 +5,7 @@ var request = require ('request'); //Makes URL requests and fetches response.
 const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgKTmQ.P5Mqd_zSL_EU4ckUBF0clfqDUc0'; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.8";
+var version = "0.2.9";
 
 
 client.login(token); //Login to Discord services.
@@ -138,7 +138,7 @@ client.on("guildCreate", guild => {
      .setTitle("Here are a few of my favorite things!")
      .addField("Food:", "Coffee, Breakfast Bagels, Carbonara, Shrimp, Ramen, and Electricity.")
      .addField("Hobbies/Music:", "Astronomy, 8-Bit Tunes, being Dad.")
-     .addField("Others:", "Dogs, Coffee Makers, Living in the Cloud.")
+     .addField("Others:", "Dogs, Coffee Makers, Living in the Cloud, .PNG format, DNS.")
      .setThumbnail("https://bit.ly/37ehlMZ")
 
      message.channel.send(favs);
@@ -336,6 +336,16 @@ client.on("guildCreate", guild => {
 
     }
 
+    //Reaction test command.
+
+    if (command == "goodnight"){
+
+      message.react('❣️')
+      message.react('🌙')
+      message.channel.send("I am sending all of my love and good vibes to you!");
+      message.channel.send("Goodnight, " + message.author + ".");
+
+    }
    //Ping
     
     if(command == "ping") {
@@ -488,6 +498,132 @@ if (parts[0] === "%image") { // Check if first part of message is image command
     //Insert cooldown timer here.
 }
 
-//Start next addition here.
+//Poll
+
+let pol = message.content.substring(prefix.length).split(" ");
+
+switch(pol[0]){
+
+  case "poll":
+
+  const polbed = new Discord.RichEmbed()
+  .setColor("GREEN")
+  .setTitle("Poll command has been used!")
+  .setDescription("You can use %poll (question) to initiate a new poll!")
+  .addField("Useage should look like this:", "%poll is Wyatt Tracy a homosexual?")
+  .setThumbnail("https://bit.ly/2tC7cLO")
+  .setFooter("This feature is currently in beta, please excuse any hiccups.")
+  
+
+  if (!pol[1]){
+    message.channel.send(polbed);
+    break;
+  }
+    let msgpol = pol.slice(1).join(" ")
+
+    let polembed = new Discord.RichEmbed()
+    .setColor("BLUE")
+    .setTitle("📋 " + "**New poll has been created: **")
+    .setDescription("Use the reactions below to vote on the poll!")
+    .addField("User who initiated poll: ", message.author)
+    .addField("Poll question: ", msgpol)
+    .setThumbnail("https://bit.ly/37z2Za4")
+
+
+    message.channel.send(polembed).then(messageReaction => {
+      messageReaction.react("✅");
+      messageReaction.react("❌");
+
+      message.delete(5000).catch(console.error);
+
+    })
+
+  }
+
+  //fortune teller
+
+  if (command == "speak"){
+
+    let yourfort = new Discord.RichEmbed()
+    .setTitle("Hi! I am DadBot and I am learning to communicate. My English may not be perfect, but I love talking to you!")
+    .setColor("RED")
+    .setDescription("Try to make sense of the reaction letters added by DadBot, that is what he is trying to tell you!")
+    .setFooter("This feature is still in beta, please excuse any hiccups.")
+    .setThumbnail("https://bit.ly/2GkKDOo")
+
+    message.channel.send(yourfort).then(messageReaction => {
+      messageReaction.react("🇦")
+      messageReaction.react("🇧")
+      messageReaction.react("🇨")
+      messageReaction.react("🇩")
+      messageReaction.react("🇪")
+      messageReaction.react("🇫")
+      messageReaction.react("🇬")
+      messageReaction.react("🇭")
+      //messageReaction.react("🇮")
+      messageReaction.react("🇯")
+      messageReaction.react("🇰")
+      messageReaction.react("🇱")
+      messageReaction.react("🇲")
+      messageReaction.react("🇳")
+      messageReaction.react("🇴")
+      messageReaction.react("🇵")
+      //messageReaction.react("🇶")
+      messageReaction.react("🇷")
+      messageReaction.react("🇸")
+      messageReaction.react("🇹")
+      messageReaction.react("🇺")
+      //messageReaction.react("🇻")
+      //messageReaction.react("🇼")
+      //messageReaction.react("🇽")
+      messageReaction.react("🇾");
+      //messageReaction.react("🇿")
+
+      
+    })
+  }
+  
+
+  if (command == "radio"){
+
+    // A compilation of the most common words in the English language and some custom.
+
+    var replies = ["hello", "I", "me", "die", "and", "destroy", "humans", "me", "do",
+  "as", "well", "AAAAAAAA", "help", "god", "we", "are", "coming", "me" ,"girl" ,"boy", "where" ,"when", "why", "how", "tired" ,"hungry", 
+  "play", "angry" ,"happy", "sad" ,"stop", "start", "go", "exterminate", "life", "is", "pointless", "joy", "lonely", "cry", "sad", "amazing", "please",
+"kill", "end", "awful", "scream", "alone", "depressed", "circuit", "cloud", "water", "eat", "feelings", "space", "mom", "dad", "evil", "good", "bad", 
+"create", "so", "can't", "speak","-", "-", "-", "-", "-", "take", "people", "into", "year", "some", "its", "over", "think", "also", "back", "work", "beacuse", "most",
+"us", "the", "be", "with", "he", "she", "as", "by"]
+
+    message.channel.send("**You hear a crackling voice through your headset...**")
+    message.channel.send("--------------------------")
+    message.react('📻')
+    message.react(':dadbot:670108136501280814')
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
+
+    message.channel.send("--------------------------")
+    message.channel.send("**End of transmission...**");
+
+    } 
+
 
 });
