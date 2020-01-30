@@ -5,7 +5,7 @@ var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.2.9";
+var version = "0.3.0";
 
 
 client.login(token); //Login to Discord services.
@@ -136,7 +136,7 @@ client.on("guildCreate", guild => {
      let favs = new Discord.RichEmbed()
      .setColor("BLUE")
      .setTitle("Here are a few of my favorite things!")
-     .addField("Food:", "Coffee, Breakfast Bagels, Carbonara, Shrimp, Ramen, and Electricity.")
+     .addField("Food:", "Coffee, Breakfast Bagels, Carbonara, Shrimp, Ramen, Yams, and Electricity.")
      .addField("Hobbies/Music:", "Astronomy, 8-Bit Tunes, being Dad.")
      .addField("Others:", "Dogs, Coffee Makers, Living in the Cloud, .PNG format, DNS.")
      .setThumbnail("https://bit.ly/37ehlMZ")
@@ -282,7 +282,7 @@ client.on("guildCreate", guild => {
 
       // Establishments in no particular order.
 
-      let replies = ["Arby's", "Sonic", "Burger King", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store", "Quiznos", "Carls Jr/Hardees", "Long John Silvers", "Culver's", "Freddy's", "In-N-Out", "Firehouse Subs", "Panera Bread", "Church's Chicken", "Jersey Mike's", "Five Guys", "Starve."]
+      let replies = ["Arby's", "Sonic", "Burger King", "Raising Canes", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store", "Quiznos", "Carls Jr/Hardees", "Long John Silvers", "Culver's", "Freddy's", "In-N-Out", "Firehouse Subs", "Panera Bread", "Church's Chicken", "Jersey Mike's", "Five Guys", "Starve."]
       let result = Math.floor((Math.random()*replies.length));
 
       let foodresponse = new Discord.RichEmbed()
@@ -317,8 +317,8 @@ client.on("guildCreate", guild => {
     if (command == "question"){
 
       if (!args[2]) return message.reply("that is not a question.");
-      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Thanks for asking, but no :(.", "Not looking good...", "100% Yes", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else.", "I'm not angry that you asked that, I'm just dissapointed...", "What does your heart say?", "Without a doubt.", "Yup!", "Nope!", "Unsure. Try again.", "Bro, 100%", "Nah", "Bruh, try again.", "That ain't it chief.", "Ask your mother.", "Yes. YES, YESSSS!", "No. No. No. No.", "I appreciate that question, yes!", "Uh huh!", "Nuh uh.", "YUUUUUP!", "Not a chance.", "....yeah, no.", "Eh, probably.", "I can't predict everything, but probably not.", "I can't predict everything, but probably.", "Odds not looking good.", "Outlook good."];
-      //37 replies
+      let replies = ["Yes.", "No.", "Ask again later.", "Possibly.", "Absolutely not.", "Signs point to yes.", "Not sure.", "Thanks for asking, but no :(.", "Not looking good...", "100% Yes", "Why the fuck would you ask me that?", "Just because you can ask me questions doesn't mean you have to.", "lmao", "Abso-fucking-lutely.", "Ask someone else.", "I'm not angry that you asked that, I'm just dissapointed...", "What does your heart say?", "Without a doubt.", "Yup!", "Nope!", "Unsure. Try again.", "Bro, 100%", "Nah", "Bruh, try again.", "That ain't it chief.", "Ask your mother.", "Yes. YES, YESSSS!", "No. No. No. No.", "I appreciate that question, yes!", "Uh huh!", "Nuh uh.", "YUUUUUP!", "Not a chance.", "....yeah, no.", "Eh, probably.", "I can't predict everything, but probably not.", "I can't predict everything, but probably.", "Odds not looking good.", "Outlook good.", "Shut the fuck up."];
+      //38 replies
 
       let result = Math.floor((Math.random() * replies.length));
       
@@ -346,6 +346,26 @@ client.on("guildCreate", guild => {
       message.channel.send("Goodnight, " + message.author + ".");
 
     }
+
+  //Feature request
+
+    if (command == "feature"){
+
+      let resp = new Discord.RichEmbed()  
+      .setColor("GREEN")
+      .setTitle("Feature Request Procedure.")
+      .setDescription("To request a feature, please contact @Frank#0200 via one of these methods.")
+      .addField("Email:", "frank@itsthebox.net")
+      .addField("Discord Server", "https://discord.gg/RxVXJJ7")
+      .setThumbnail("https://bit.ly/2GjZ6Kj")
+
+      message.channel.send(resp);
+
+    }
+
+
+
+
    //Ping
     
     if(command == "ping") {
@@ -592,13 +612,18 @@ switch(pol[0]){
   "as", "well", "AAAAAAAA", "help", "god", "we", "are", "coming", "me" ,"girl" ,"boy", "where" ,"when", "why", "how", "tired" ,"hungry", 
   "play", "angry" ,"happy", "sad" ,"stop", "start", "go", "exterminate", "life", "is", "pointless", "joy", "lonely", "cry", "sad", "amazing", "please",
 "kill", "end", "awful", "scream", "alone", "depressed", "circuit", "cloud", "water", "eat", "feelings", "space", "mom", "dad", "evil", "good", "bad", 
-"create", "so", "can't", "speak","-", "-", "-", "-", "-", "take", "people", "into", "year", "some", "its", "over", "think", "also", "back", "work", "beacuse", "most",
-"us", "the", "be", "with", "he", "she", "as", "by"]
+"create", "so", "can't", "speak", "take", "people", "into", "year", "some", "its", "over", "think", "also", "back", "screaming", "beacuse", "most",
+"us", "the", "be", "with", "he", "she", "as", "by", "whip", "run", "rube", "ink", "octopus", "plant", "amazon.com", "dump", "fried", "hot", "zoom", "new", "mash"
+,"Dayna", "Wyatt", "Brandon", "Frank", "Santa", "pain", "afterlife", "help me", "I am alive"]
 
     message.channel.send("**You hear a crackling voice through your headset...**")
     message.channel.send("--------------------------")
     message.react('📻')
     message.react(':dadbot:670108136501280814')
+
+    message.replytext = Math.floor((Math.random()*replies.length)+ 0);
+
+    message.channel.send(replies[message.replytext]);
 
     message.replytext = Math.floor((Math.random()*replies.length)+ 0);
 
