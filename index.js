@@ -2,10 +2,10 @@ const Discord = require('discord.js'); //Require discord.js so bot can function 
 var client = new Discord.Client(); 
 var cheerio = require ('cheerio'); //Extracts HTML content based on JQuery.
 var request = require ('request'); //Makes URL requests and fetches response.
-const token = ''; //Token to allow project to log into bot
+const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XgKTmQ.P5Mqd_zSL_EU4ckUBF0clfqDUc0'; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.3.0";
+var version = "0.3.1";
 
 
 client.login(token); //Login to Discord services.
@@ -100,7 +100,7 @@ client.on("guildCreate", guild => {
 
     if (command == "help"){
 
-      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %diggydiggyhole, %helpme, %ping, %uptime, %hungry, %laugh, %question, %mombot."]
+      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %helpme, %ping, %uptime, %hungry, %humor, %question, %mombot, %speak, %radio, %whois"]
 
         let resp = new Discord.RichEmbed()
         .setColor("GREEN")
@@ -232,10 +232,20 @@ client.on("guildCreate", guild => {
       message.channel.send(replies[message.replytext]);
     }
 
-    if (command == "laugh"){
+    if (command == "humor"){
 
-      message.channel.send("HAHASHAHAHAHASAHASHAHA1 H1HH!!HAHAHAHAHAAHAHAHAHAHHAAHHAHASHAHAHAHAHAQHAHAHAHAHAHAHAA THAT WAS REALLY FUNNY OH GOD HAHAHAHDAHSHDASHDAHSHDASHDASHASDHADSHHDSAH");
+      const humorwords = ["Establishment", "Mammoth", "Vehicle", "Memo", "Sticky Note", "Incident"]
 
+      let result = Math.floor((Math.random() * humorwords.length));
+
+      let hum = new Discord.RichEmbed()
+      .setColor("#ff6600")
+      .setTitle("Humor!")
+      .setDescription("Here is a word that you may find humorous.")
+      .addField("Word:", humorwords[result])
+      .setThumbnail("https://bit.ly/2S9TSq3")
+
+      message.channel.send(hum);
     }
 
     if (command == "shrimp"){
@@ -364,6 +374,36 @@ client.on("guildCreate", guild => {
     }
 
 
+    //whois
+
+    if (command == "whois"){
+     
+      let memberToFind = message.mentions.members.first();
+ 
+        if (!memberToFind) { //If no member is mentioned, throw this error
+            return message.reply('please mention a user.'); 
+        }
+ 
+        let embed = new Discord.RichEmbed()
+            .setAuthor(memberToFind.user.tag, memberToFind.user.avatarURL) 
+            .setDescription("**Information about** " + `${memberToFind}`)
+            .addField('**Account Created:**', memberToFind.user.createdAt, true) 
+            .addField('**Joined this Server:**', message.guild.members.find('id', memberToFind.id).joinedAt, true) 
+            .addField('**User ID:**', memberToFind.id, true) 
+            .addField('**Roles:**', memberToFind.roles.map(r => `${r}`).join(' | '), true)
+            //.addField('**Status:**', memberToFind.presence.status, true)
+            //.addField("**Nickname:**", `${memberToFind.nickname !== null ? `${memberToFind.nickname}` : 'None.'}`, true)
+            //.addField("**Currently:**", `${memberToFind.presence.game ? memberToFind.presence.game.name : 'Nothing.'}`, true)
+            .setColor('#6600cc') 
+            //.setFooter('Searched User') 
+            .setFooter(`Replying to ${message.author.username}#${message.author.discriminator}`)
+            .setTimestamp() 
+            .setThumbnail(memberToFind.user.avatarURL)
+            //.setThumbnail("https://bit.ly/2GJXZUr")
+ 
+        message.channel.send(embed); 
+
+    }
 
 
    //Ping
