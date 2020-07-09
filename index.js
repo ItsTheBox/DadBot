@@ -2,10 +2,10 @@ const Discord = require('discord.js'); //Require discord.js so bot can function 
 var client = new Discord.Client(); 
 var cheerio = require ('cheerio'); //Extracts HTML content based on JQuery.
 var request = require ('request'); //Makes URL requests and fetches response.
-const token = ''; //Token to allow project to log into bot
+const token = 'NjU4NTM5MjM3MTY3MjAyMzA0.XwdqxQ.paTJTmy7p7hTWqeLanmsEnHsd90'; //Token to allow project to log into bot
 const config = require ("./config.json");
 const prefix = '%';
-var version = "0.3.1";
+var version = "0.3.4";
 
 
 client.login(token); //Login to Discord services.
@@ -19,12 +19,12 @@ client.on('ready', () =>{
 
 //Welcome bot
 
-client.on('guildMemberAdd', member =>{
-    const channel = member.guild.channels.find(ch => ch.name === 'welcoming');
-    if (!channel) return;
-        channel.send('On behalf of Dad himself, welcome to the server ' + (member) + '!');
+//client.on('guildMemberAdd', member =>{
+// const channel = member.guild.channels.find(ch => ch.name === 'welcoming');
+//if (!channel) return;
+//channel.send('On behalf of Dad himself, welcome to the server ' + (member) + '!');
 });
-})
+
 
   
 client.on("guildCreate", guild => {
@@ -71,11 +71,11 @@ client.on("guildCreate", guild => {
     if(command == "hosting"){
         
         let resp = new Discord.RichEmbed()
-        .setColor("RED")
+        .setColor("#FCBE37")
         .setTitle("Hosting Information.")
-        .addField("Current hosting information:", "DadBot is hosted on Red Hat Enterprise Linux 8.0.0, running within an Amazon Web Services EC2 cloud virutal machine instance!")
+        .addField("Current hosting information:", "DadBot is hosted on Dads home server. He runs in a Virtual Machine that is running Ubuntu 20.04.")
         .setFooter("For more information or for any inquiries, please email frank@itsthebox.net")
-        .setThumbnail('https://bit.ly/2RCmoAf')
+        .setThumbnail('https://bit.ly/3e06WrF')
         
         message.channel.send(resp);
     }
@@ -100,7 +100,7 @@ client.on("guildCreate", guild => {
 
     if (command == "help"){
 
-      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %helpme, %ping, %uptime, %hungry, %humor, %question, %mombot, %speak, %radio, %whois"]
+      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %helpme, %ping, %uptime, %hungry, %humor, %question, %mombot, %speak, %whois"]
 
         let resp = new Discord.RichEmbed()
         .setColor("GREEN")
@@ -111,6 +111,21 @@ client.on("guildCreate", guild => {
 
         message.channel.send(resp);
     }
+
+  //Donation
+
+  if (command == "donate"){
+
+    let resp = new Discord.RichEmbed()
+    .setTitle("DadBot Donations!")
+    .setDescription("DadBot is a labor of love, I do not expect any money from anyone. However, if you would like to contribute towards hosting costs I would love you eternally.")
+    .addField("You can donate at the following link:", "http://paypal.me/itsthebox")
+    .addField("People who have donated:", "SantaCthulhu - $20")
+    .setFooter("If you donate, I will love you forever, you'll get your name added the donator list, and you'll get priority on any feature requests in the future. <3")
+    .setThumbnail("https://bit.ly/3beAgK7")
+
+    message.channel.send(resp);
+  }
 
   //imagehelp command for %image searching, just to let people know best practices.
 
@@ -234,7 +249,7 @@ client.on("guildCreate", guild => {
 
     if (command == "humor"){
 
-      const humorwords = ["Establishment", "Mammoth", "Vehicle", "Memo", "Sticky Note", "Incident"]
+      const humorwords = ["Establishment", "Mammoth", "Vehicle", "Memo", "Sticky Note", "Incident", "Scrub", ""]
 
       let result = Math.floor((Math.random() * humorwords.length));
 
@@ -555,7 +570,7 @@ if (parts[0] === "%image") { // Check if first part of message is image command
  
     }
 
-    //Insert cooldown timer here.
+   
 }
 
 //Poll
@@ -602,12 +617,12 @@ switch(pol[0]){
 
   //fortune teller
 
-  if (command == "speak"){
+  if (command == "fortune"){
 
     let yourfort = new Discord.RichEmbed()
-    .setTitle("Hi! I am DadBot and I am learning to communicate. My English may not be perfect, but I love talking to you!")
+    .setTitle("Ah, you wish to know your fortune? I may be of assistance...")
     .setColor("RED")
-    .setDescription("Try to make sense of the reaction letters added by DadBot, that is what he is trying to tell you!")
+    .setDescription("Try to make sense of the reaction letters added by DadBot, that is your fortune.")
     .setFooter("This feature is still in beta, please excuse any hiccups.")
     .setThumbnail("https://bit.ly/2GkKDOo")
 
@@ -644,7 +659,7 @@ switch(pol[0]){
   }
   
 
-  if (command == "radio"){
+  if (command == "speak"){
 
     // A compilation of the most common words in the English language and some custom.
 
@@ -656,7 +671,7 @@ switch(pol[0]){
 "us", "the", "be", "with", "he", "she", "as", "by", "whip", "run", "rube", "ink", "octopus", "plant", "amazon.com", "dump", "fried", "hot", "zoom", "new", "mash"
 ,"Dayna", "Wyatt", "Brandon", "Frank", "Santa", "pain", "afterlife", "help me", "I am alive"]
 
-    message.channel.send("**You hear a crackling voice through your headset...**")
+    message.channel.send("**You hear a crackling voice through your headset... DadBot is trying to speak to you...**")
     message.channel.send("--------------------------")
     message.react('📻')
     message.react(':dadbot:670108136501280814')
@@ -689,6 +704,5 @@ switch(pol[0]){
     message.channel.send("**End of transmission...**");
 
     } 
-
 
 });
