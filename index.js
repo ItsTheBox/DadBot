@@ -704,5 +704,46 @@ switch(pol[0]){
     message.channel.send("**End of transmission...**");
 
     } 
+      //Start Dictonary Bot
+
+if (command === "define"){
+
+  if(!args){
+    return reply("Please search for a definition by using %define _word/phrase_");
+  }
+  else{
+
+    fetch.get("http://api.urbandictionary.com/v0/define?term=" + args).then(res => {
+      if(res.body.list[0] === undefined){
+        return message.channel.send("I couldn't define that term D:")
+      }
+    const def = res.body.list[0].definition;
+    const word = res.body.list[0].word;
+    const Author = res.body.list[0].author;
+    const exam = res.body.list[0].example;
+    const thump = res.body.list[0].thumbs_up;
+    const thdown = res.body.list[0].thumbs_down;
+    const udem = new Discord.RichEmbed()
+    .setColor("RED")
+    .setTitle(`I have fetched your definition for **${word}**.`)
+    .addField("Definiton:", `${def}`)
+    .addField("Author:", `${Author}`)
+    .addField("Example:", `${exam}`)
+    .addField("Rating:", `:thumbsup: ${thump} :thumbsdown: ${thdown}`, true)
+    .setThumbnail("https://bit.ly/3j82Y3s")
+    message.channel.send(udem).catch(e => logger.error(e));
+  }).catch(e =>{
+    if(e) console.log(e)
+  })
+  
+  }
+
+
+
+}
+
+
+
+});
 
 });
