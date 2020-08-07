@@ -4,8 +4,9 @@ var cheerio = require ('cheerio'); //Extracts HTML content based on JQuery.
 var request = require ('request'); //Makes URL requests and fetches response.
 const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
+const fetch = require("snekfetch") //HTTP requesting service for Urban Dictonary requests
 const prefix = '%';
-var version = "0.3.4";
+var version = "0.3.6";
 
 
 client.login(token); //Login to Discord services.
@@ -13,7 +14,7 @@ client.login(token); //Login to Discord services.
 client.on('ready', () =>{
     console.log(`DadBot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); //Ensure bot is functional and online
 
-    client.user.setActivity(`Being a dad in ${client.guilds.size} server(s)!`);
+    client.user.setActivity(`Being dad in ${client.guilds.size} server(s)!`);
 
 
 
@@ -61,7 +62,7 @@ client.on("guildCreate", guild => {
 
       message.replytext = Math.floor((Math.random()*replies.length)+ 0);
 
-      message.channel.send(replies[message.replytext]);
+      message.reply(replies[message.replytext]);
 
     }
    // Single line commands.
@@ -100,7 +101,7 @@ client.on("guildCreate", guild => {
 
     if (command == "help"){
 
-      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %helpme, %ping, %uptime, %hungry, %humor, %question, %mombot, %speak, %whois"]
+      const replies = ["%hello, %info, %aboutdad, %favorites, %hosting, %image, %imagehelp, %egg, %loaf, %shrimp, %carbonara, %birthday, %badtake, %encourage, %ping, %uptime, %hungry, %humor, %question, %hug, %speak, %whois"]
 
         let resp = new Discord.RichEmbed()
         .setColor("GREEN")
@@ -118,9 +119,9 @@ client.on("guildCreate", guild => {
 
     let resp = new Discord.RichEmbed()
     .setTitle("DadBot Donations!")
-    .setDescription("DadBot is a labor of love, I do not expect any money from anyone. However, if you would like to contribute towards hosting costs I would love you eternally.")
+    .setDescription("DadBot is a labor of love, I do not expect any money from anyone. However, if you would like to contribute towards hosting and development costs I would love you eternally.")
     .addField("You can donate at the following link:", "http://paypal.me/itsthebox")
-    .addField("People who have donated:", "SantaCthulhu - $20")
+    .addField("People who have donated:", "SantaCthulhu - $40")
     .setFooter("If you donate, I will love you forever, you'll get your name added the donator list, and you'll get priority on any feature requests in the future. <3")
     .setThumbnail("https://bit.ly/3beAgK7")
 
@@ -238,7 +239,7 @@ client.on("guildCreate", guild => {
             
     }
 
-    if (command == "helpme"){
+    if (command == "encourage"){
 
       const replies = ["Everything will be okay!", "I am here for you.", "Take a deep breath, maybe drink some water! If only I could drink water, alas, I am a bot.", "You can talk to me, I don't judge!", ""]
 
@@ -290,13 +291,14 @@ client.on("guildCreate", guild => {
     }
 
 
-    if (command == "mombot"){
+    if (command == "hug"){
 
+      message.react("❣️")
       let resp = new Discord.RichEmbed()
-      .setTitle("My Wife!")
-      .setDescription("Mombot is my wife, I love her (no matter what else I may say). She is a music bot that can play songs, build a song queue, and help you jam out! She is the best.")
-      .setFooter("If you experience any issues with MomBot, please email frank@itsthebox.net, or join the official Mom & Dad bot Discord! https://discord.gg/RxVXJJ7")
+      .setTitle("I hear you need a hug, so do I.")
+      .setDescription("DadBot gives you the biggest hug he possibly can.")
       .setColor('GREEN')
+      .setThumbnail("https://bit.ly/2DEwTjh")
 
       message.channel.send(resp);
 
@@ -307,18 +309,18 @@ client.on("guildCreate", guild => {
 
       // Establishments in no particular order.
 
-      let replies = ["Arby's", "Sonic", "Burger King", "Raising Canes", "Chic Fil A", " McDonalds", "Checkers/Rallys", "Steak & Shake", "Popeyes", "Zaxbys", "Bojangles", "Subway", "Which Which", "Captain D's", "Taco Bell", "KFC", "Jack in the Box", "Del Taco", "Taco Cabana", "Dairy Queen", "Whataburger", "Dunkin Donuts", "Chipotle", "Wendys", "Panda Express", "Jimmmy Johns", "Qdoba", "Eat at home", "White Castle", "A&W", "Check grocery store", "Quiznos", "Carls Jr/Hardees", "Long John Silvers", "Culver's", "Freddy's", "In-N-Out", "Firehouse Subs", "Panera Bread", "Church's Chicken", "Jersey Mike's", "Five Guys", "Starve."]
+      let replies = ["Chicken", "Pizza", "Burger", "Mexican", "Sandwiche", "Eat at home", "Sushi", "Chinese", "Italian", "Wings", "Grocery store"]
       let result = Math.floor((Math.random()*replies.length));
 
       let foodresponse = new Discord.RichEmbed()
-      .setTitle("You have issued the 'hungry' command! A random food establishment will be generated for you below!")
-      .addField("**Food Establishment:** ", replies[result])
+      .setTitle("You have issued the 'hungry' command! A random food genre will be generated for you below!")
+      .addField("**Food:** ", replies[result])
       .setDescription("Generating food...")
       .setColor("BLUE")
-      .setFooter("If you do not have the generated establishment where you live, issue the %hungry command again!")
-      .setThumbnail('https://bit.ly/2uixUsE')
+      .setFooter("You can choose any item that falls within the category generated for you.")
+      .setThumbnail('https://bit.ly/30xSTW0')
 
-      message.channel.send(foodresponse);
+      message.reply(foodresponse);
 
 
     }
@@ -704,7 +706,8 @@ switch(pol[0]){
     message.channel.send("**End of transmission...**");
 
     } 
-      //Start Dictonary Bot
+
+//Start Dictonary Bot
 
 if (command === "define"){
 
@@ -743,7 +746,5 @@ if (command === "define"){
 }
 
 
-
-});
 
 });
