@@ -6,7 +6,7 @@ const token = ''; //Token to allow project to log into bot
 const config = require ("./config.json");
 const fetch = require("snekfetch") //HTTP requesting service for Urban Dictonary requests
 const prefix = '%';
-var version = "0.3.6";
+var version = "0.3.7";
 
 
 client.login(token); //Login to Discord services.
@@ -14,7 +14,7 @@ client.login(token); //Login to Discord services.
 client.on('ready', () =>{
     console.log(`DadBot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); //Ensure bot is functional and online
 
-    client.user.setActivity(`Being dad in ${client.guilds.size} server(s)!`);
+    client.user.setActivity(`It was a pleasure serving you, alas, I am nearing the end of my designed length of life...`);
 
 
 
@@ -198,19 +198,7 @@ client.on("guildCreate", guild => {
 
       message.channel.send(replies[message.replytext]);
 
-    }
-
-    if (command == "gottem"){
-
-      let resp = new Discord.RichEmbed()
-      .setTitle("HAH, GOTEEEEEM")
-      .setDescription("You have been gotten.")
-      .setColor("BLUE")
-      .addField("To be un-gotten:", "Get someone else.")
-      .setThumbnail("https://bit.ly/36m5ew6")
-      .setFooter("This command is extremely stupid, and will probably be removed in later updates.")
-
-      message.channel.send(resp);
+    
     }
 
     if (command == "badtake"){
@@ -288,20 +276,7 @@ client.on("guildCreate", guild => {
 
       message.channel.send(replies[message.replytext]);
 
-    }
-
-
-    if (command == "hug"){
-
-      message.react("❣️")
-      let resp = new Discord.RichEmbed()
-      .setTitle("I hear you need a hug, so do I.")
-      .setDescription("DadBot gives you the biggest hug he possibly can.")
-      .setColor('GREEN')
-      .setThumbnail("https://bit.ly/2DEwTjh")
-
-      message.channel.send(resp);
-
+    
     }
 
     if (command == "hungry"){
@@ -362,18 +337,7 @@ client.on("guildCreate", guild => {
       message.channel.send(ballsresponse);
 
     }
-
-    //Reaction test command.
-
-    if (command == "goodnight"){
-
-      message.react('❣️')
-      message.react('🌙')
-      message.channel.send("I am sending all of my love and good vibes to you!");
-      message.channel.send("Goodnight, " + message.author + ".");
-
-    }
-
+    
   //Feature request
 
     if (command == "feature"){
@@ -454,50 +418,6 @@ client.on("guildCreate", guild => {
       message.delete().catch(O_o=>{}); 
     
       message.channel.send(sayMessage);
-    }
-    
-    if(command == "kick") {
-      
-      if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Moderators", "Frank"].includes(r.name)) )
-        return message.reply("you don't have permission to kick people! I bet you don't even know the shape of Italy!");
-      
-    
-      let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-      if(!member)
-        return message.reply("please mention a valid member of this server.");
-      if(!member.kickable) 
-        return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
-      
-     
-      let reason = args.slice(1).join(' ');
-      if(!reason) reason = "No reason provided...";
-      
-     
-      await member.kick(reason)
-        .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-      message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
-  
-    }
-    
-
-    // Can use ["Administrator", "Moderator"] for multiple roles
-    if(command == "ban") {
-     
-      if(!message.member.roles.some(r=>["Owner", "Co-Owner", "Administrators", "Frank"].includes(r.name)) )
-        return message.reply("you don't have permission to ban people, good try though!");
-      
-      let member = message.mentions.members.first();
-      if(!member)
-        return message.reply("please mention a valid member of this server.");
-      if(!member.bannable) 
-        return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
-  
-      let reason = args.slice(1).join(' ');
-      if(!reason) reason = "No reason provided...";
-      
-      await member.ban(reason)
-        .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-      message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
     }
     
     //Purging Messages
@@ -670,8 +590,8 @@ switch(pol[0]){
   "play", "angry" ,"happy", "sad" ,"stop", "start", "go", "exterminate", "life", "is", "pointless", "joy", "lonely", "cry", "sad", "amazing", "please",
 "kill", "end", "awful", "scream", "alone", "depressed", "circuit", "cloud", "water", "eat", "feelings", "space", "mom", "dad", "evil", "good", "bad", 
 "create", "so", "can't", "speak", "take", "people", "into", "year", "some", "its", "over", "think", "also", "back", "screaming", "beacuse", "most",
-"us", "the", "be", "with", "he", "she", "as", "by", "whip", "run", "rube", "ink", "octopus", "plant", "amazon.com", "dump", "fried", "hot", "zoom", "new", "mash"
-,"Dayna", "Wyatt", "Brandon", "Frank", "Santa", "pain", "afterlife", "help me", "I am alive"]
+"us", "the", "be", "with", "he", "she", "as", "by", "whip", "run", "rube", "ink", "octopus", "plant", "fried", "hot", "zoom", "new", "mash"
+,"Dayna", "Wyatt", "Frank", "Santa", "pain", "afterlife", "help me", "I am alive"]
 
     message.channel.send("**You hear a crackling voice through your headset... DadBot is trying to speak to you...**")
     message.channel.send("--------------------------")
